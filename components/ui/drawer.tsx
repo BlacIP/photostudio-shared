@@ -79,6 +79,8 @@ function DrawerHeader({
 }: React.HTMLAttributes<HTMLDivElement> & {
   showCloseButton?: boolean;
 }) {
+  const shouldShowClose = Boolean(showCloseButton);
+
   return (
     <div
       className={cn(
@@ -89,7 +91,7 @@ function DrawerHeader({
     >
       {children}
 
-      {showCloseButton && (
+      {shouldShowClose && (
         <DrawerClose asChild>
           <CompactButton.Root variant='ghost' size='large'>
             <CompactButton.Icon as={RiCloseLine} />

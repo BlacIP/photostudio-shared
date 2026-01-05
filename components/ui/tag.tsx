@@ -145,6 +145,10 @@ const TagDismissButton = React.forwardRef<
   ) => {
     const Component = asChild ? Slot : 'button';
     const { dismissButton } = tagVariants({ variant, disabled });
+    const dismissContent =
+      children ?? (
+        <TagDismissIcon variant={variant} disabled={disabled} as={RiCloseFill} />
+      );
 
     return (
       <Component
@@ -152,13 +156,7 @@ const TagDismissButton = React.forwardRef<
         className={dismissButton({ class: className })}
         {...rest}
       >
-        {children ?? (
-          <TagDismissIcon
-            variant={variant}
-            disabled={disabled}
-            as={RiCloseFill}
-          />
-        )}
+        {dismissContent}
       </Component>
     );
   },

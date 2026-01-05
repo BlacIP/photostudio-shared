@@ -365,6 +365,12 @@ const SelectItem = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SelectPrimitives.Item>
 >(({ className, children, ...rest }, forwardedRef) => {
   const { size } = useSelectContext();
+  const itemText =
+    typeof children === 'string' ? (
+      <span className="line-clamp-1">{children}</span>
+    ) : (
+      children
+    );
 
   return (
     <SelectPrimitives.Item
@@ -390,17 +396,13 @@ const SelectItem = React.forwardRef<
             // base
             'flex flex-1 items-center gap-2',
             // disabled
-            'group-disabled:text-text-disabled-300',
-            {
-              'gap-1.5': size === 'xsmall',
-            },
-          )}
-        >
-          {typeof children === 'string' ? (
-            <span className='line-clamp-1'>{children}</span>
-          ) : (
-            children
-          )}
+          'group-disabled:text-text-disabled-300',
+          {
+            'gap-1.5': size === 'xsmall',
+          },
+        )}
+      >
+        {itemText}
         </span>
       </SelectPrimitives.ItemText>
       <SelectPrimitives.ItemIndicator asChild>

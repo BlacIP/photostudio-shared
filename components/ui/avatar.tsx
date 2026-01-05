@@ -159,6 +159,9 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
     const uniqueId = React.useId();
     const Component = asChild ? Slot : 'div';
     const { root } = avatarVariants({ size, color });
+    const hasChildren = Boolean(children);
+    const placeholderIcon =
+      placeholderType === 'company' ? <IconEmptyCompany /> : <IconEmptyUser />;
 
     const sharedProps: AvatarSharedProps = {
       size,
@@ -166,16 +169,10 @@ const AvatarRoot = React.forwardRef<HTMLDivElement, AvatarRootProps>(
     };
 
     // use placeholder icon if no children provided
-    if (!children) {
+    if (!hasChildren) {
       return (
         <div className={root({ class: className })} {...rest}>
-          <AvatarImage asChild>
-            {placeholderType === 'company' ? (
-              <IconEmptyCompany />
-            ) : (
-              <IconEmptyUser />
-            )}
-          </AvatarImage>
+          <AvatarImage asChild>{placeholderIcon}</AvatarImage>
         </div>
       );
     }

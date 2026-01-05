@@ -60,6 +60,10 @@ const Notification = React.forwardRef<
     }: NotificationProps,
     forwardedRef,
   ) => {
+    const hasTitle = Boolean(title)
+    const hasDescription = Boolean(description)
+    const hasAction = Boolean(action)
+    const canDismiss = !disableDismiss
     let Icon: React.ElementType;
 
     switch (status) {
@@ -102,20 +106,20 @@ const Notification = React.forwardRef<
           <Alert.Icon as={Icon} aria-hidden='true' />
           <div className='flex w-full flex-col gap-2.5'>
             <div className='flex w-full flex-col gap-1'>
-              {title && (
+              {hasTitle && (
                 <NotificationPrimitives.Title className='text-label-sm'>
                   {title}
                 </NotificationPrimitives.Title>
               )}
-              {description && (
+              {hasDescription && (
                 <NotificationPrimitives.Description>
                   {description}
                 </NotificationPrimitives.Description>
               )}
             </div>
-            {action && <div className='flex items-center gap-2'>{action}</div>}
+            {hasAction && <div className='flex items-center gap-2'>{action}</div>}
           </div>
-          {!disableDismiss && (
+          {canDismiss && (
             <NotificationPrimitives.Close aria-label='Close'>
               <Alert.CloseIcon />
             </NotificationPrimitives.Close>

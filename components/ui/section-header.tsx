@@ -17,19 +17,17 @@ const SectionHeader = React.forwardRef<HTMLDivElement, SectionHeaderProps>(
       {...props}
     >
       <div className="space-y-1">
-        {eyebrow ? (
+        {eyebrow && (
           <p className="text-xs uppercase tracking-[0.2em] text-text-sub-600">
             {eyebrow}
           </p>
-        ) : null}
+        )}
         <h2 className="text-xl font-semibold text-text-strong-950 md:text-2xl">
           {title}
         </h2>
-        {description ? (
-          <p className="text-sm text-text-sub-600">{description}</p>
-        ) : null}
+        {description && <p className="text-sm text-text-sub-600">{description}</p>}
       </div>
-      {action ? <div className="shrink-0">{action}</div> : null}
+      {action && <div className="shrink-0">{action}</div>}
     </div>
   ),
 );

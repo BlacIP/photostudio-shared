@@ -52,6 +52,10 @@ export function AdminSidebar({
   className,
   ...props
 }: AdminSidebarProps) {
+  const hasHeaderSubtitle = Boolean(headerSubtitle)
+  const hasNavSecondary = navSecondary.length > 0
+  const hasFooter = Boolean(footer)
+
   return (
     <Sidebar
       variant="sidebar"
@@ -77,11 +81,11 @@ export function AdminSidebar({
                   <span className="truncate font-semibold text-text-strong-950">
                     {headerTitle}
                   </span>
-                  {headerSubtitle ? (
+                  {hasHeaderSubtitle && (
                     <span className="truncate text-xs text-text-sub-600">
                       {headerSubtitle}
                     </span>
-                  ) : null}
+                  )}
                 </div>
               </div>
             </SidebarMenuButton>
@@ -90,15 +94,15 @@ export function AdminSidebar({
       </SidebarHeader>
       <SidebarContent className="gap-3 px-2 pb-3">
         <NavMain items={navMain} />
-        {navSecondary.length ? (
+        {hasNavSecondary && (
           <NavSecondary items={navSecondary} className="mt-auto" />
-        ) : null}
+        )}
       </SidebarContent>
-      {footer ? (
+      {hasFooter && (
         <SidebarFooter className="border-t border-stroke-soft-200/80 px-2 py-3">
           {footer}
         </SidebarFooter>
-      ) : null}
+      )}
     </Sidebar>
   )
 }

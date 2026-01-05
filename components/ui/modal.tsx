@@ -42,6 +42,8 @@ const ModalContent = React.forwardRef<
     { className, overlayClassName, children, showClose = true, ...rest },
     forwardedRef,
   ) => {
+    const shouldShowClose = Boolean(showClose);
+
     return (
       <ModalPortal>
         <ModalOverlay className={overlayClassName}>
@@ -62,7 +64,7 @@ const ModalContent = React.forwardRef<
             {...rest}
           >
             {children}
-            {showClose && (
+            {shouldShowClose && (
               <ModalClose asChild>
                 <CompactButton.Root
                   variant='ghost'
@@ -93,6 +95,9 @@ function ModalHeader({
   title?: string;
   description?: string;
 }) {
+  const hasChildren = Boolean(children);
+  const hasText = Boolean(title || description);
+
   return (
     <div
       className={cn(
@@ -101,14 +106,16 @@ function ModalHeader({
       )}
       {...rest}
     >
-      {children || (
+      {hasChildren ? (
+        children
+      ) : (
         <>
           {Icon && (
             <div className='flex size-10 shrink-0 items-center justify-center rounded-full bg-bg-white-0 ring-1 ring-inset ring-stroke-soft-200'>
               <Icon className='size-5 text-text-sub-600' />
             </div>
           )}
-          {(title || description) && (
+          {hasText && (
             <div className='flex-1 space-y-1'>
               {title && <ModalTitle>{title}</ModalTitle>}
               {description && (

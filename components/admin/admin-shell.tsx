@@ -31,6 +31,8 @@ export function AdminShell({
   mainClassName,
   children,
 }: AdminShellProps) {
+  const hasHeaderActions = Boolean(headerActions)
+
   return (
     <SidebarProvider>
       {guard}
@@ -50,11 +52,11 @@ export function AdminShell({
                 {headerBadge}
                 <span>{headerTitle}</span>
               </div>
-              {headerActions ? (
+              {hasHeaderActions && (
                 <div className="ml-auto flex items-center gap-2">
                   {headerActions}
                 </div>
-              ) : null}
+              )}
             </header>
 
             <main

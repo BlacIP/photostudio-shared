@@ -56,6 +56,7 @@ export function UserNav({
   className,
 }: UserNavProps) {
   const resolvedInitials = initials ?? getInitials(displayName, email)
+  const hasEmail = Boolean(email)
   const itemBase =
     "flex w-full items-center gap-2 rounded px-2 py-1.5 text-sm cursor-pointer outline-none"
 
@@ -75,9 +76,7 @@ export function UserNav({
             <p className="text-sm font-medium text-text-strong-950 truncate">
               {displayName}
             </p>
-            {email ? (
-              <p className="text-xs text-text-sub-600 truncate">{email}</p>
-            ) : null}
+            {hasEmail && <p className="text-xs text-text-sub-600 truncate">{email}</p>}
           </div>
         </button>
       </DropdownMenu.Trigger>
@@ -105,6 +104,7 @@ export function UserNav({
                 ? "text-error-base hover:bg-error-base/10 hover:text-error-base"
                 : "text-text-strong-950 hover:bg-bg-weak-50"
             const itemClassName = cn(itemBase, variantClass)
+            const iconNode = Icon ? <Icon size={16} /> : null
 
             if (item.type === "action") {
               return (
@@ -113,7 +113,7 @@ export function UserNav({
                   onSelect={item.onSelect}
                   className={itemClassName}
                 >
-                  {Icon ? <Icon size={16} /> : null}
+                  {iconNode}
                   {item.label}
                 </DropdownMenu.Item>
               )
@@ -122,7 +122,7 @@ export function UserNav({
             return (
               <DropdownMenu.Item key={`${item.label}-${index}`} asChild>
                 <Link href={item.href} className={itemClassName}>
-                  {Icon ? <Icon size={16} /> : null}
+                  {iconNode}
                   {item.label}
                 </Link>
               </DropdownMenu.Item>

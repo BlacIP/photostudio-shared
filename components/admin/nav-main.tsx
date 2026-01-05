@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import type { ReactNode } from "react"
 import { ChevronRight, type LucideIcon } from "lucide-react"
 
 import {
@@ -34,7 +35,10 @@ export function NavMain({
     }[]
   }[]
 }) {
-  const isExternalUrl = (url: string) => url.startsWith("http") || url.startsWith("mailto:")
+  const isExternalUrl = (url: string) =>
+    url.startsWith("http") || url.startsWith("mailto:")
+  const renderLink = (url: string, content: ReactNode) =>
+    isExternalUrl(url) ? <a href={url}>{content}</a> : <Link href={url}>{content}</Link>
 
   return (
     <SidebarGroup className="rounded-xl border border-stroke-soft-200/80 bg-bg-weak-50/70 p-3">
@@ -46,19 +50,15 @@ export function NavMain({
           <Collapsible key={item.title} asChild defaultOpen={item.isActive}>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip={item.title} size="lg" className="rounded-lg">
-                {isExternalUrl(item.url) ? (
-                  <a href={item.url}>
+                {renderLink(
+                  item.url,
+                  <>
                     <item.icon />
                     <span>{item.title}</span>
-                  </a>
-                ) : (
-                  <Link href={item.url}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </Link>
+                  </>
                 )}
               </SidebarMenuButton>
-              {item.items?.length ? (
+              {item.items?.length && (
                 <>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuAction className="data-[state=open]:rotate-90">
@@ -71,22 +71,14 @@ export function NavMain({
                       {item.items?.map((subItem) => (
                         <SidebarMenuSubItem key={subItem.title}>
                           <SidebarMenuSubButton asChild>
-                            {isExternalUrl(subItem.url) ? (
-                              <a href={subItem.url}>
-                                <span>{subItem.title}</span>
-                              </a>
-                            ) : (
-                              <Link href={subItem.url}>
-                                <span>{subItem.title}</span>
-                              </Link>
-                            )}
+                            {renderLink(subItem.url, <span>{subItem.title}</span>)}
                           </SidebarMenuSubButton>
                         </SidebarMenuSubItem>
                       ))}
                     </SidebarMenuSub>
                   </CollapsibleContent>
                 </>
-              ) : null}
+              )}
             </SidebarMenuItem>
           </Collapsible>
         ))}
